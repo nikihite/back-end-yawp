@@ -54,6 +54,11 @@ describe('backend-express-template routes', () => {
     expect(res.status).toBe(200);
   });
 
+  it('shows list of restaurants', async () => {
+    const res = await request(app).get('/api/v1/restaurants');
+    expect(res.status).toBe(200);
+  });
+
   afterAll(() => {
     pool.end();
   });
