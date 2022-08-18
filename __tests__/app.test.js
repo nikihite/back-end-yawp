@@ -59,6 +59,15 @@ describe('backend-express-template routes', () => {
     expect(res.status).toBe(200);
   });
 
+  it('should return data from single restaurant review', async () => {
+    const res = await request(app).get('/api/v1/restaurants/1');
+    expect(res.body).toHaveProperty('id', '1');
+    expect(res.body).toHaveProperty('name', 'Thai Tanic');
+    expect(res.body).toHaveProperty('style', 'Thai');
+    expect(res.body).toHaveProperty('rating', 3);
+    expect(res.body.reviews[0]).toHaveProperty('id', '3');
+  });
+
   afterAll(() => {
     pool.end();
   });
