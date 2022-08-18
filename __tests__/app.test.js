@@ -81,6 +81,14 @@ describe('backend-express-template routes', () => {
     });
   });
 
+  it('should delete review for authorized user', async () => {
+    const [agent] = await registerAndLogin();
+    const res = await agent.delete('/api/v1/reviews/3');
+    expect(res.status).toBe(200);
+    const reviewResp = await request(app).get('/api/v1/reviews/3');
+    expect(reviewResp.status).toBe(404);
+  });
+
   afterAll(() => {
     pool.end();
   });
