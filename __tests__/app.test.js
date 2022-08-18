@@ -68,6 +68,19 @@ describe('backend-express-template routes', () => {
     expect(res.body.reviews[0]).toHaveProperty('id', '3');
   });
 
+  it('should create a new review for authorized user', async () => {
+    const newReview = {
+      'rating': 1,
+      'details': 'the tacos sucked',
+      'restaurant_id': '5',
+    };
+    const [agent] = await registerAndLogin();
+    const res = await agent.post('/api/v1/restaurants/5/reviews').send(newReview);
+    expect(res.body).toEqual({
+      id: expect.any(String), ...newReview
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });
